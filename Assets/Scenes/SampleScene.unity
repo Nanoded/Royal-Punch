@@ -1990,10 +1990,10 @@ RectTransform:
   m_Father: {fileID: 1796188132}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 93.8}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &523725919
 MonoBehaviour:
@@ -2121,10 +2121,10 @@ RectTransform:
   m_Father: {fileID: 180991958}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: -156.5}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &534481243
 MonoBehaviour:
@@ -2940,10 +2940,10 @@ RectTransform:
   m_Father: {fileID: 1471957026}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -33.74}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &710826113
 MonoBehaviour:
@@ -3688,10 +3688,10 @@ RectTransform:
   m_Father: {fileID: 1471957026}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 124.65}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1005553209
 MonoBehaviour:
@@ -3941,7 +3941,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1129568277}
-  m_LocalRotation: {x: 0.28979853, y: -0.2892293, z: 0.09234603, w: 0.90765387}
+  m_LocalRotation: {x: 0.28969973, y: -0.2901984, z: 0.092655435, w: 0.90734446}
   m_LocalPosition: {x: 21.654055, y: 12.644634, z: -26.8698}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -4403,10 +4403,10 @@ RectTransform:
   m_Father: {fileID: 180991958}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0}
-  m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 87.8}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchorMin: {x: 0, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 0, y: 80}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1376638749
 MonoBehaviour:
@@ -6520,10 +6520,10 @@ RectTransform:
   m_Father: {fileID: 1796188132}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 1}
-  m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -16.93}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 150}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2120787427
 MonoBehaviour:
@@ -6798,6 +6798,18 @@ PrefabInstance:
     - target: {fileID: 664414475, guid: d3e72749779861940a6fc6f65be4ba95, type: 3}
       propertyPath: playOnAwake
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 853720829311499524, guid: d3e72749779861940a6fc6f65be4ba95, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.5402
+      objectReference: {fileID: 0}
+    - target: {fileID: 853720829311499524, guid: d3e72749779861940a6fc6f65be4ba95, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 3.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 853720829311499524, guid: d3e72749779861940a6fc6f65be4ba95, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.01086258
       objectReference: {fileID: 0}
     - target: {fileID: 2412211070723272633, guid: d3e72749779861940a6fc6f65be4ba95, type: 3}
       propertyPath: m_UpdateMode
