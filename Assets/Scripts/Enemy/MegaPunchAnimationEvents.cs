@@ -8,6 +8,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
     [SerializeField] private ParticleSystem _circleShockWaveEffect;
     [SerializeField] private ParticleSystem _rectangleShockWaveEffect;
     [SerializeField] private ParticleSystem _magnettoEffect;
+    [SerializeField] private ParticleSystem _chargeEffect;
     [SerializeField] private RectTransform _circleAreaDamage;
     [SerializeField] private RectTransform _rectangleAreaDamage;
     [SerializeField] private float _maxSizeScaleChargingEffects;
@@ -45,6 +46,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void ChargeSuperPunch()
     {
+        _chargeEffect.Play();
         _animator.StartPlayback();
         _scaleEffects = new Vector3(0, _maxSizeScaleChargingEffects, 0);
         StartCoroutine(_megaPunchController.ChargingMegaPunch(_rectangleAreaDamage, _scaleEffects));
@@ -52,6 +54,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void SuperPunchDealDamage()
     {
+        _chargeEffect.Stop();
         _rectangleShockWaveEffect.Play();
         Ray ray = new Ray(transform.position + Vector3.up, transform.forward);
         RaycastHit[] allHits = Physics.SphereCastAll(ray, 2.0f, _megaPunchController.DistanceMegaPunch * 2, LayerMask.GetMask("Player"));
@@ -67,6 +70,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void ChargeDoublePunch()
     {
+        _chargeEffect.Play();
         _animator.StartPlayback();
         _scaleEffects = new Vector3(_maxSizeScaleChargingEffects, _maxSizeScaleChargingEffects, _maxSizeScaleChargingEffects);
         StartCoroutine(_megaPunchController.ChargingMegaPunch(_circleAreaDamage, _scaleEffects));
@@ -74,6 +78,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void DoublePunchDealDamage()
     {
+        _chargeEffect.Stop();
         _circleShockWaveEffect.Play();
         _hitColliders = Physics.OverlapSphere(transform.position, _megaPunchController.DistanceMegaPunch, LayerMask.GetMask("Player"));
         foreach (var collider in _hitColliders)
