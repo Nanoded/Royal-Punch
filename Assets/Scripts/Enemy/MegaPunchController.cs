@@ -5,7 +5,6 @@ using DG.Tweening;
 [RequireComponent(typeof(Animator))]
 public class MegaPunchController : MonoBehaviour
 {
-    [Header("Mega punch settings")]
     [SerializeField] private float _timeBeforeMegaPunch;
     [SerializeField] private float _timeChargingMegaPunch;
     [SerializeField] private float _timeMagnettoMode;
@@ -111,9 +110,9 @@ public class MegaPunchController : MonoBehaviour
 
     public void ShockWaveImpact(Collider target)
     {
-        if (target.TryGetComponent(out PlayerReactingToShockwave playerReaction))
+        if (target.TryGetComponent(out PlayerRagdollManager playerReaction))
         {
-            playerReaction.EnableRagdoll(_megaPunchForce, transform.position + playerReaction.transform.position);
+            playerReaction.EnableRagdoll(_megaPunchForce, playerReaction.transform.position + transform.position);
         }
         if (target.TryGetComponent(out Health health))
         {

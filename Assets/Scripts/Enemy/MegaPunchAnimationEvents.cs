@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MegaPunchController))]
@@ -18,6 +17,23 @@ public class MegaPunchAnimationEvents : MonoBehaviour
     private Animator _animator;
     private MegaPunchController _megaPunchController;
     private Collider[] _hitColliders;
+
+    private void Start()
+    {
+        Health.EnemyDeathEvent.AddListener(ResetEffects);
+    }
+
+    private void ResetEffects()
+    {
+        if (_circleAreaDamage.gameObject.activeInHierarchy)
+        {
+            _megaPunchController.ReloadPunchEffect(_circleAreaDamage);
+        }
+        else if(_rectangleAreaDamage.gameObject.activeInHierarchy)
+        {
+            _megaPunchController.ReloadPunchEffect(_rectangleAreaDamage);
+        }
+    }
 
     private void Awake()
     {
@@ -85,6 +101,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     IEnumerator Relaxation()
     {
+        _magnettoEffect.Stop();
         yield return new WaitForSeconds(_timeToRelax);
         _animator.CrossFade("Idle", 0.1f);
         _megaPunchController.StartCoroutine(_megaPunchController.PlayMegaPunch());

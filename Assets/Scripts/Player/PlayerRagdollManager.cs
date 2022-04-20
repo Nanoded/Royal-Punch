@@ -5,10 +5,9 @@ using DG.Tweening;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(PlayerMovement))]
-public class PlayerReactingToShockwave : MonoBehaviour
+public class PlayerRagdollManager : MonoBehaviour
 {
     [SerializeField] GameObject _armature;
-    [SerializeField] Rigidbody _head;
     private Rigidbody _playerRigidbody;
     private List<Rigidbody> _allBones = new List<Rigidbody>();
     private List<Vector3> _startPositionsBones = new List<Vector3>();
@@ -22,6 +21,10 @@ public class PlayerReactingToShockwave : MonoBehaviour
         _playerMovement = GetComponent<PlayerMovement>();
         _playerRigidbody = GetComponent<Rigidbody>();
         GetAllRigidbodies(_armature);
+        _armature.SetActive(false);
+        Health.PlayerDeathEvent.AddListener(EnableRagdollAfterDeath);
+        EventsController.RestartLoseEvent.AddListener(DisableRagdollAfterReset);
+        EventsController.RestartWinEvent.AddListener(DisableRagdollAfterReset);
     }
 
     private void GetAllRigidbodies(GameObject parent)
@@ -44,12 +47,25 @@ public class PlayerReactingToShockwave : MonoBehaviour
         }
     }
 
+    private void EnableRagdollAfterDeath()
+    {
+        _armature.SetActive(true);
+    }
+    private void DisableRagdollAfterReset()
+    {
+        _armature.SetActive(false);
+    }
+
     public void EnableRagdoll(float shockwaveForce, Vector3 directionShokwave)
     {
         _animator.enabled = false;
         _playerMovement.enabled = false;
+        _armature.SetActive(true);
         _playerRigidbody.velocity = Vector3.zero;
-        _head.AddForce(directionShokwave * shockwaveForce, ForceMode.Impulse);
+        for (int i = 0; i < _allBones.Count; i++)
+        {
+            _allBones[i].AddForce(directionShokwave.normalized * shockwaveForce, ForceMode.Impulse);
+        }
         StartCoroutine(DisableRagdoll());
     }
 
@@ -62,6 +78,7 @@ public class PlayerReactingToShockwave : MonoBehaviour
             _allBones[i].transform.DORotateQuaternion(_startQuaternionsBones[i], 1);
         }
         yield return new WaitForSeconds(1);
+        _armature.SetActive(false);
         _playerMovement.enabled = true;
         _animator.enabled = true;
         StopCoroutine(DisableRagdoll());

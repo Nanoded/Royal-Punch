@@ -4,11 +4,12 @@ using UnityEngine;
 [RequireComponent(typeof(AttackBehaviour))]
 public class CharacterEventBehaviour : MonoBehaviour
 {
+    [SerializeField] private GameObject _armature;
     private PlayerMovement _playerMovement;
     private MegaPunchController _megaPunchController;
     private MegaPunchAnimationEvents _megaPunchAnimationEvents;
     private AttackBehaviour _attackBehaviour;
-    private PlayerReactingToShockwave _playerReactingToShockwave;
+    private PlayerRagdollManager _playerReactingToShockwave;
     private Animator _animator;
     private Vector3 _characterStartPosition;
     private Quaternion _characterStartRotation;
@@ -29,7 +30,7 @@ public class CharacterEventBehaviour : MonoBehaviour
             _playerMovement = playerMovement;
             _playerMovement.enabled = false;
         }
-        if(TryGetComponent(out PlayerReactingToShockwave reaction))
+        if(TryGetComponent(out PlayerRagdollManager reaction))
         {
             _playerReactingToShockwave = reaction;
         }
@@ -71,11 +72,13 @@ public class CharacterEventBehaviour : MonoBehaviour
             StartCoroutine(_megaPunchController.PlayMegaPunch());
         }
         _attackBehaviour.enabled = true;
+        _armature.SetActive(false);
     }
 
     private void ResetCharacters()
     {
         _attackBehaviour.enabled = true;
+        _armature.SetActive(false);
         if (_playerMovement != null)
         {
             _animator.enabled = true;
@@ -132,6 +135,8 @@ public class CharacterEventBehaviour : MonoBehaviour
         if (_megaPunchController != null)
         {
             _animator.enabled = false;
+            _megaPunchController.StopAllCoroutines();
+            _armature.SetActive(true);
         }
     }
     
@@ -140,6 +145,7 @@ public class CharacterEventBehaviour : MonoBehaviour
         StopFight();
         if (_playerMovement != null)
         {
+            _animator.enabled = false;
             _playerMovement.enabled = false;
             _animator.CrossFade("Lose", 0.1f);
         }

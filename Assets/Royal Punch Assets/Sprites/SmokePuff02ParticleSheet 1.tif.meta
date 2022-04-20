@@ -108,6 +108,7 @@ TextureImporter:
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
+  ignoreMasterTextureLimit: 0
   grayScaleToAlpha: 0
   generateCubemap: 6
   cubemapConvolution: 0
@@ -721,6 +722,32 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
+    nameFileIdTable:
+      SmokePuff02ParticleSheet 1_21: 4885626513688464364
+      SmokePuff02ParticleSheet 1_11: 8335026075205546612
+      SmokePuff02ParticleSheet 1_14: 4266448679602255803
+      SmokePuff02ParticleSheet 1_6: -9143971678478937317
+      SmokePuff02ParticleSheet 1_2: -3710972017881306439
+      SmokePuff02ParticleSheet 1_25: 1396861398999758699
+      SmokePuff02ParticleSheet 1_19: -8470495478610142651
+      SmokePuff02ParticleSheet 1_15: 1161141143031550699
+      SmokePuff02ParticleSheet 1_0: -9049434047396927960
+      SmokePuff02ParticleSheet 1_1: 9094883330483897597
+      SmokePuff02ParticleSheet 1_16: -5844775637642966272
+      SmokePuff02ParticleSheet 1_13: -5218235996962210918
+      SmokePuff02ParticleSheet 1_18: 8063489312239326741
+      SmokePuff02ParticleSheet 1_5: -151941478659432365
+      SmokePuff02ParticleSheet 1_22: 4509424871858495820
+      SmokePuff02ParticleSheet 1_23: -4020078466339101660
+      SmokePuff02ParticleSheet 1_8: 1700689641979635982
+      SmokePuff02ParticleSheet 1_17: -8030495687120506908
+      SmokePuff02ParticleSheet 1_20: 7044001416342866179
+      SmokePuff02ParticleSheet 1_9: -2798284368214659197
+      SmokePuff02ParticleSheet 1_10: 8312529060262842236
+      SmokePuff02ParticleSheet 1_7: -1240690806001848715
+      SmokePuff02ParticleSheet 1_24: 4906723578105341236
+      SmokePuff02ParticleSheet 1_3: 8432366827511941077
+      SmokePuff02ParticleSheet 1_4: -1052172834103640187
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
