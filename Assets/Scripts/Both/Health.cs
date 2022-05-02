@@ -18,6 +18,8 @@ public class Health : MonoBehaviour
     public static UnityEvent EnemyDeathEvent = new UnityEvent();
     public static UnityEvent PlayerDeathEvent = new UnityEvent();
 
+    public float CurrentHealth => _currentHealth;
+
     void Start()
     {
         _animator = GetComponent<Animator>();
@@ -31,8 +33,8 @@ public class Health : MonoBehaviour
 
         _healthCanvas.SetActive(false);
 
-        EventsController.RestartLoseEvent.AddListener(ResetHealthSettings);
-        EventsController.RestartWinEvent.AddListener(ResetHealthSettings);
+        EventsController.RestartLoseEvent.AddListener(HideHealthBar);
+        EventsController.RestartWinEvent.AddListener(HideHealthBar);
         EventsController.StartEvent.AddListener(ViewHealthBar);
         EventsController.TrainingEvent.AddListener(AddPlayerHealth);
         EventsController.RemoveProgressEvent.AddListener(InitHealth);
@@ -43,29 +45,11 @@ public class Health : MonoBehaviour
     {
         if(_playerMovement != null)
         {
-            if(PlayerPrefs.HasKey("PlayerHealth"))
-            {
-                _maxHealth = PlayerPrefs.GetFloat("PlayerHealth");
-            }
-            else
-            {
-                _maxHealth = 100;
-                PlayerPrefs.SetFloat("PlayerHealth", _maxHealth);
-            }
-            PlayerPrefs.Save();
+            LoadSaveHealthData("PlayerHealth");
         }
         else
         {
-            if(PlayerPrefs.HasKey("EnemyHealth"))
-            {
-                _maxHealth = PlayerPrefs.GetFloat("EnemyHealth");
-            }
-            else
-            {
-                _maxHealth = 100;
-                PlayerPrefs.SetFloat("EnemyHealth", _maxHealth);
-            }
-            PlayerPrefs.Save();
+            LoadSaveHealthData("EnemyHealth");
         }
 
         _currentHealth = _maxHealth;
@@ -73,7 +57,21 @@ public class Health : MonoBehaviour
         _healthbar.fillAmount = _currentHealth / _maxHealth;
     }
 
-    private void ResetHealthSettings()
+    private void LoadSaveHealthData(string playerPrefsValueName)
+    {
+        if (PlayerPrefs.HasKey(playerPrefsValueName))
+        {
+            _maxHealth = PlayerPrefs.GetFloat(playerPrefsValueName);
+        }
+        else
+        {
+            _maxHealth = 100;
+            PlayerPrefs.SetFloat(playerPrefsValueName, _maxHealth);
+        }
+        PlayerPrefs.Save();
+    }
+
+    private void HideHealthBar()
     {
         _healthCanvas.SetActive(false);
     }
@@ -101,6 +99,11 @@ public class Health : MonoBehaviour
 
     public void GetDamage(float damage)
     {
+        if(_playerMovement == null)
+        {
+            _animator.CrossFade("GetDamage", 0.1f);
+        }
+
         _currentHealth -= damage;
         _healthbar.fillAmount = _currentHealth / _maxHealth;
         if(_currentHealth <= 0)

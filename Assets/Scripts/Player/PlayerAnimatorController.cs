@@ -24,6 +24,4 @@ public class PlayerAnimatorController : MonoBehaviour
         _animator.SetFloat("x", _playerMovement.AnimationMovementValue.x);
         _animator.SetFloat("y", _playerMovement.AnimationMovementValue.y);
     }
-
-    
 }

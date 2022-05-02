@@ -8,6 +8,7 @@ using DG.Tweening;
 public class PlayerRagdollManager : MonoBehaviour
 {
     [SerializeField] GameObject _armature;
+    [SerializeField] private Rigidbody _addForceRigidbody;
     private Rigidbody _playerRigidbody;
     private List<Rigidbody> _allBones = new List<Rigidbody>();
     private List<Vector3> _startPositionsBones = new List<Vector3>();
@@ -62,10 +63,7 @@ public class PlayerRagdollManager : MonoBehaviour
         _playerMovement.enabled = false;
         _armature.SetActive(true);
         _playerRigidbody.velocity = Vector3.zero;
-        for (int i = 0; i < _allBones.Count; i++)
-        {
-            _allBones[i].AddForce(directionShokwave.normalized * shockwaveForce, ForceMode.Impulse);
-        }
+        _addForceRigidbody.AddForce(directionShokwave * shockwaveForce, ForceMode.Impulse);
         StartCoroutine(DisableRagdoll());
     }
 

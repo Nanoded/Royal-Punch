@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AttackBehaviour))]
-public class CharacterEventBehaviour : MonoBehaviour
+public class ResetCharacter : MonoBehaviour
 {
     [SerializeField] private GameObject _armature;
     private PlayerMovement _playerMovement;
@@ -48,8 +48,6 @@ public class CharacterEventBehaviour : MonoBehaviour
         EventsController.StartEvent.AddListener(StartGame);
         EventsController.RestartWinEvent.AddListener(RestartWinLevel);
         EventsController.RestartLoseEvent.AddListener(RestartLoseLevel);
-        Health.EnemyDeathEvent.AddListener(BehaviourAfterEnemyDeath);
-        Health.PlayerDeathEvent.AddListener(BehaviourAfterPlayerDeath);
     }
 
     private void StartGame()
@@ -75,7 +73,7 @@ public class CharacterEventBehaviour : MonoBehaviour
         _armature.SetActive(false);
     }
 
-    private void ResetCharacters()
+    private void ResetCharacters(string NameAnimationAfterReset)
     {
         _attackBehaviour.enabled = true;
         _armature.SetActive(false);
@@ -84,70 +82,23 @@ public class CharacterEventBehaviour : MonoBehaviour
             _animator.enabled = true;
             transform.position = _characterStartPosition;
             transform.rotation = _characterStartRotation;
-
+            _animator.CrossFade(NameAnimationAfterReset, 0.1f);
         }
         else
         {
             _megaPunchController.StopAllCoroutines();
             _megaPunchAnimationEvents.StopAllCoroutines();
+            _animator.CrossFade("Idle", 0.1f);
         }
     }
 
     private void RestartWinLevel()
     {
-        ResetCharacters();
-        if (_playerMovement != null)
-        {
-            _animator.CrossFade("WinDance", 0.1f);
-        }
+        ResetCharacters("WinDance");
 
     }
     private void RestartLoseLevel()
     {
-        ResetCharacters();
-        if (_playerMovement != null)
-        {
-            _animator.CrossFade("Lose", 0.1f);
-        }
-    }
-
-    private void StopFight()
-    {
-        _attackBehaviour.enabled = false;
-        _animator.CrossFade("Idle", 0.1f);
-        _animator.SetBool("Attack", false);
-        
-        if (_playerReactingToShockwave != null)
-        {
-            _playerReactingToShockwave.StopAllCoroutines();
-            _playerReactingToShockwave.enabled = false;
-        }
-    }
-
-    private void BehaviourAfterEnemyDeath()
-    {
-        StopFight();
-        if(_playerMovement != null)
-        {
-            _playerMovement.enabled = false;
-            _animator.CrossFade("Win", 0.1f);
-        }
-        if (_megaPunchController != null)
-        {
-            _animator.enabled = false;
-            _megaPunchController.StopAllCoroutines();
-            _armature.SetActive(true);
-        }
-    }
-    
-    private void BehaviourAfterPlayerDeath()
-    {
-        StopFight();
-        if (_playerMovement != null)
-        {
-            _animator.enabled = false;
-            _playerMovement.enabled = false;
-            _animator.CrossFade("Lose", 0.1f);
-        }
+        ResetCharacters("Lose");
     }
 }

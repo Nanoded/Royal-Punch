@@ -34,6 +34,8 @@ public class MegaPunchAnimationEvents : MonoBehaviour
         {
             _megaPunchController.ReloadPunchEffect(_rectangleAreaDamage);
         }
+        _chargeEffect.Stop();
+        _magnettoEffect.Stop();
     }
 
     private void Awake()

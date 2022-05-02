@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.Events;
 
 [RequireComponent(typeof(Animator))]
 public class MegaPunchController : MonoBehaviour
@@ -12,6 +13,7 @@ public class MegaPunchController : MonoBehaviour
     [SerializeField] private float _magnetAtractionForce;
     [SerializeField] private float _megaPunchDamage;
     [SerializeField] private float _distanceMegaPunch;
+
 
     private bool _lookAtPlayer;
     private Vector3 _defaultScaleEffects;
