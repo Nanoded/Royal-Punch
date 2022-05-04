@@ -114,7 +114,7 @@ public class MegaPunchController : MonoBehaviour
     {
         if (target.TryGetComponent(out PlayerRagdollManager playerReaction))
         {
-            playerReaction.EnableRagdoll(_megaPunchForce, playerReaction.transform.position + transform.position);
+            playerReaction.EnableRagdoll(_megaPunchForce, (playerReaction.transform.position * 2 + playerReaction.transform.up * 7) -  transform.position);
         }
         if (target.TryGetComponent(out Health health))
         {

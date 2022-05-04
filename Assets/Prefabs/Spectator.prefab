@@ -418,6 +418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3047b3779709cc24584acd4c90cbd092, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _animationsCount: 12
 --- !u!1 &3611274183359215402
 GameObject:
   m_ObjectHideFlags: 0
@@ -534,7 +535,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: -6478536213147159724, guid: 001de8bbfb396a14ca758c5fe183e8eb, type: 3}
+  - {fileID: 2100000, guid: b226a087ae292004a8b6d5e060b86cb2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

@@ -5,6 +5,8 @@ public class SlowMoEffect : MonoBehaviour
     [SerializeField] private float _slowMoTimeScale;
     [SerializeField] private float _gameSpeed;
 
+    public float GameSpeed => _gameSpeed;
+
     void Start()
     {
         EventsController.RestartLoseEvent.AddListener(ResetSettings);

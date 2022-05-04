@@ -80,10 +80,11 @@ public class DeathBehaviour : MonoBehaviour
         StopFight();
         if (_playerMovement != null)
         {
+            _armature.SetActive(true);
             _animator.enabled = false;
             _playerMovement.enabled = false;
             _animator.CrossFade("Lose", 0.1f);
-            _hitBoneRigidbody.AddForce((_enemy.transform.position - transform.position) * _deathPunchForce, ForceMode.Impulse);
+            _hitBoneRigidbody.AddForce((transform.position - _enemy.transform.position) * _deathPunchForce, ForceMode.Impulse);
         }
         else if (_megaPunchController != null)
         {
