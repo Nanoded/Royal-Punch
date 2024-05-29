@@ -4,6 +4,8 @@ public class SlowMoEffect : MonoBehaviour
 {
     [SerializeField] private float _slowMoTimeScale;
     [SerializeField] private float _gameSpeed;
+    [SerializeField] private AudioSource _endSound;
+    [SerializeField] private AudioSource _peopleSound;
 
     public float GameSpeed => _gameSpeed;
 
@@ -23,6 +25,8 @@ public class SlowMoEffect : MonoBehaviour
 
     private void SlowMoEffectOn()
     {
+        _endSound.Play();
+        _peopleSound.Play();
         Time.timeScale = _slowMoTimeScale;
     }
 }

@@ -6,12 +6,11 @@ public class TrainingButton : MonoBehaviour
 {
     [SerializeField] private int _trainingCost;
     [SerializeField] private CoinManager _coinManager;
-    private Button _buttonComponent;
+    [SerializeField] private Button _buttonComponent;
 
     private void Start()
     {
-        _buttonComponent = GetComponent<Button>();
-        EventsController.TrainingEvent.AddListener(Train);
+        _buttonComponent.onClick.AddListener(Train);
     }
 
     private void Update()
@@ -21,7 +20,7 @@ public class TrainingButton : MonoBehaviour
 
     private void CheckInteractable()
     {
-        if(PlayerPrefs.GetInt("Coins") < _trainingCost)
+        if(_coinManager.CoinCount < _trainingCost)
         {
             _buttonComponent.interactable = false;
         }

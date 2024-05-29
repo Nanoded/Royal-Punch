@@ -1,0 +1,21 @@
+{
+  "idSave": 153,
+  "isFirstSession": false,
+  "language": "ru",
+  "promptDone": false,
+  "money": 1,
+  "newPlayerName": "Hello!",
+  "openLevels": [
+    false,
+    true,
+    false
+  ],
+  "Cups": 5,
+  "Coins": 310,
+  "PlayerHealth": 100,
+  "PlayerForce": 50,
+  "PlayerStamina": 6,
+  "EnemyHealth": 609,
+  "EnemyForce": 88,
+  "EnemyMegaPunchForce": 90
+}

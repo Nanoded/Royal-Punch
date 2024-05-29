@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using YG;
 
 public class CoinManager : MonoBehaviour
 {
@@ -8,6 +9,13 @@ public class CoinManager : MonoBehaviour
     [SerializeField] private int _coinsForDefeat;
 
     private int _currentCoinCount;
+
+    public int CoinCount => _currentCoinCount;
+
+    private void Awake()
+    {
+        YandexGame.GetDataEvent += InitCoins;
+    }
 
     private void Start()
     {
@@ -21,34 +29,31 @@ public class CoinManager : MonoBehaviour
 
     private void InitCoins()
     {
-        if(PlayerPrefs.HasKey("Coins"))
-        {
-            _currentCoinCount = PlayerPrefs.GetInt("Coins");
-        }
-        else
-        {
-            _currentCoinCount = 0;
-            PlayerPrefs.SetInt("Coins", _currentCoinCount);
-        }
-        PlayerPrefs.Save();
+        _currentCoinCount = YandexGame.savesData.Coins;
         _coinCount.text = _currentCoinCount.ToString();
     }
 
-    private void AddWinCoin()
+    public void AddWinCoin()
     {
-        PlayerPrefs.SetInt("Coins", _currentCoinCount += _coinsForVictory);
+        _currentCoinCount += _coinsForVictory;
+        YandexGame.savesData.Coins = _currentCoinCount;
+        YandexGame.SaveProgress();
         InitCoins();
     }
     
     private void AddLoseCoin()
     {
-        PlayerPrefs.SetInt("Coins", _currentCoinCount += _coinsForDefeat);
+        _currentCoinCount += _coinsForDefeat;
+        YandexGame.savesData.Coins = _currentCoinCount;
+        YandexGame.SaveProgress();
         InitCoins();
     }
 
     public void SpendCoins(int price)
     {
-        PlayerPrefs.SetInt("Coins", _currentCoinCount -= price);
+        _currentCoinCount -= price;
+        YandexGame.savesData.Coins = _currentCoinCount;
+        YandexGame.SaveProgress();
         InitCoins();
     }
 }

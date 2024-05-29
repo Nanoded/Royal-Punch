@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using DG.Tweening;
-using UnityEngine.Events;
+using YG;
 
 [RequireComponent(typeof(Animator))]
 public class MegaPunchController : MonoBehaviour
@@ -11,8 +11,10 @@ public class MegaPunchController : MonoBehaviour
     [SerializeField] private float _timeMagnettoMode;
     [SerializeField] private float _megaPunchForce;
     [SerializeField] private float _magnetAtractionForce;
-    [SerializeField] private float _megaPunchDamage;
+    [SerializeField] private int _megaPunchDamage;
+    [SerializeField] private int _addDamage;
     [SerializeField] private float _distanceMegaPunch;
+    [SerializeField] private AudioSource _punchSound;
 
 
     private bool _lookAtPlayer;
@@ -26,6 +28,8 @@ public class MegaPunchController : MonoBehaviour
 
     private void Awake()
     {
+        _megaPunchDamage = YandexGame.savesData.EnemyMegaPunchForce;
+        YandexGame.GetDataEvent += () => _megaPunchDamage = YandexGame.savesData.EnemyMegaPunchForce;
         _lookAtPlayer = true;
         _animator = GetComponent<Animator>();
         _player = GameObject.FindGameObjectWithTag("Player").transform;
@@ -33,6 +37,12 @@ public class MegaPunchController : MonoBehaviour
         {
             _playerRigidbody = playerRigidbody;
         }
+        EventsController.RestartWinEvent.AddListener(() =>
+        {
+            _megaPunchDamage += _addDamage;
+            YandexGame.savesData.EnemyMegaPunchForce = _megaPunchDamage;
+            YandexGame.SaveProgress();
+        });
     }
 
     private void Update()
@@ -58,7 +68,7 @@ public class MegaPunchController : MonoBehaviour
     {
         if (isMagnet == true)
         {
-            _playerRigidbody.AddForce((_player.position + transform.position) * _magnetAtractionForce, ForceMode.VelocityChange);
+            _playerRigidbody.AddForce((_player.position + transform.position).normalized * _magnetAtractionForce, ForceMode.VelocityChange);
         }
     }
 
@@ -119,6 +129,7 @@ public class MegaPunchController : MonoBehaviour
         if (target.TryGetComponent(out Health health))
         {
             health.GetDamage(_megaPunchDamage);
+            _punchSound.Play();
         }
     }
 }

@@ -50,11 +50,11 @@ public class PlayerRagdollManager : MonoBehaviour
 
     private void EnableRagdollAfterDeath()
     {
-        _armature.SetActive(true);
+        //_armature.SetActive(true);
     }
     private void DisableRagdollAfterReset()
     {
-        _armature.SetActive(false);
+        //_armature.SetActive(false);
     }
 
     public void EnableRagdoll(float shockwaveForce, Vector3 directionShokwave)

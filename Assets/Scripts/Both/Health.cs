@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
+using YG;
 
 [RequireComponent(typeof(Animator))]
 public class Health : MonoBehaviour
@@ -9,71 +10,70 @@ public class Health : MonoBehaviour
     [SerializeField] private GameObject _healthCanvas;
     [SerializeField] private Image _healthbar;
     [SerializeField] private TextMeshProUGUI _healthCount;
-    [SerializeField] private float _trainedHealth;
-    private float _maxHealth;
-    private float _currentHealth;
+    [SerializeField] private int _trainedHealth;
+    private int _maxHealth;
+    private int _currentHealth;
     private Animator _animator;
     private PlayerMovement _playerMovement;
 
     public static UnityEvent EnemyDeathEvent = new UnityEvent();
     public static UnityEvent PlayerDeathEvent = new UnityEvent();
 
-    public float CurrentHealth => _currentHealth;
+    public int CurrentHealth => _currentHealth;
+
+    private void Awake()
+    {
+        if(TryGetComponent(out PlayerMovement playerMovement))
+        {
+            _playerMovement = playerMovement;
+        }
+        YandexGame.GetDataEvent += InitHealth;
+    }
 
     void Start()
     {
         _animator = GetComponent<Animator>();
 
-        if(TryGetComponent(out PlayerMovement playerMovement))
-        {
-            _playerMovement = playerMovement;
-        }
-
         InitHealth();
-
-        _healthCanvas.SetActive(false);
 
         EventsController.RestartLoseEvent.AddListener(HideHealthBar);
         EventsController.RestartWinEvent.AddListener(HideHealthBar);
         EventsController.StartEvent.AddListener(ViewHealthBar);
-        EventsController.TrainingEvent.AddListener(AddPlayerHealth);
         EventsController.RemoveProgressEvent.AddListener(InitHealth);
-        EnemyDeathEvent.AddListener(AddEnemyHealth);
+        //EnemyDeathEvent.AddListener(AddEnemyHealth);
     }
 
     private void InitHealth()
     {
         if(_playerMovement != null)
         {
-            LoadSaveHealthData("PlayerHealth");
+            LoadSaveHealthData(true);
         }
         else
         {
-            LoadSaveHealthData("EnemyHealth");
+            LoadSaveHealthData(false);
         }
 
         _currentHealth = _maxHealth;
         _healthCount.text = _currentHealth.ToString();
-        _healthbar.fillAmount = _currentHealth / _maxHealth;
+        _healthbar.fillAmount = (float)((float)_currentHealth / (float)_maxHealth);
     }
 
-    private void LoadSaveHealthData(string playerPrefsValueName)
+    private void LoadSaveHealthData(bool isPlayer)
     {
-        if (PlayerPrefs.HasKey(playerPrefsValueName))
+        if (isPlayer)
         {
-            _maxHealth = PlayerPrefs.GetFloat(playerPrefsValueName);
+            _maxHealth = YandexGame.savesData.PlayerHealth;
         }
         else
         {
-            _maxHealth = 100;
-            PlayerPrefs.SetFloat(playerPrefsValueName, _maxHealth);
+            _maxHealth = YandexGame.savesData.EnemyHealth;
         }
-        PlayerPrefs.Save();
     }
 
     private void HideHealthBar()
     {
-        _healthCanvas.SetActive(false);
+        InitHealth();
     }
 
     private void ViewHealthBar()
@@ -92,12 +92,14 @@ public class Health : MonoBehaviour
         }
         else
         {
-            EnemyDeathEvent.Invoke();
+            if(EnemyDeathEvent != null)
+                EnemyDeathEvent.Invoke();
+            AddEnemyHealth();
         }
         StopAllCoroutines();
     }
-
-    public void GetDamage(float damage)
+    
+    public void GetDamage(int damage)
     {
         if(_playerMovement == null)
         {
@@ -105,7 +107,7 @@ public class Health : MonoBehaviour
         }
 
         _currentHealth -= damage;
-        _healthbar.fillAmount = _currentHealth / _maxHealth;
+        _healthbar.fillAmount = (float)((float)_currentHealth / (float)_maxHealth);
         if(_currentHealth <= 0)
         {
             _currentHealth = 0;
@@ -116,21 +118,19 @@ public class Health : MonoBehaviour
 
     private void AddEnemyHealth()
     {
-        _maxHealth += Random.Range(10, 41);
         if (_playerMovement == null)
         {
-            PlayerPrefs.SetFloat("EnemyHealth", _maxHealth);
-            PlayerPrefs.Save();
+            _maxHealth += Random.Range(20, 71);
+            YandexGame.savesData.EnemyHealth = _maxHealth;
+            YandexGame.SaveProgress();
         }
     }
 
-    private void AddPlayerHealth()
+    public void UpgradeHealth()
     {
-        if (_playerMovement != null)
-        {
-            _maxHealth += _trainedHealth;
-            PlayerPrefs.SetFloat("PlayerHealth", _maxHealth);
-            PlayerPrefs.Save();
-        }
+        _maxHealth += _trainedHealth;
+        _healthCount.text = _maxHealth.ToString();
+        YandexGame.savesData.PlayerHealth = _maxHealth;
+        YandexGame.SaveProgress();
     }
 }

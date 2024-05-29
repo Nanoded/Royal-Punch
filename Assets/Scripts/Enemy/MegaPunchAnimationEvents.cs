@@ -13,6 +13,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
     [SerializeField] private RectTransform _rectangleAreaDamage;
     [SerializeField] private float _maxSizeScaleChargingEffects;
     [SerializeField] private float _timeToRelax;
+    [SerializeField] private AudioSource _bossSound;
 
     private Vector3 _scaleEffects;
     private Animator _animator;
@@ -56,6 +57,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void SuperPunchDealDamage()
     {
+        _bossSound.Play();
         _chargeEffect.Stop();
         _rectangleShockWaveEffect.Play();
         Ray ray = new Ray(transform.position + Vector3.up, transform.forward);
@@ -80,6 +82,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void DoublePunchDealDamage()
     {
+        _bossSound.Play();
         _chargeEffect.Stop();
         _circleShockWaveEffect.Play();
         _hitColliders = Physics.OverlapSphere(transform.position, _megaPunchController.DistanceMegaPunch, LayerMask.GetMask("Player"));
@@ -98,6 +101,7 @@ public class MegaPunchAnimationEvents : MonoBehaviour
 
     private void MagnettoPunchDealDamage()
     {
+        _bossSound.Play();
         _magnettoEffect.Stop();
         _hitColliders = Physics.OverlapSphere(transform.position, _megaPunchController.DistanceMegaPunch, LayerMask.GetMask("Player"));
         foreach (var collider in _hitColliders)

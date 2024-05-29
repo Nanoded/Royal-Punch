@@ -8,6 +8,7 @@ public class DeathBehaviour : MonoBehaviour
     [SerializeField] private float _deathPunchForce;
     [SerializeField] private GameObject _enemy;
     [SerializeField] private ParticleSystem[] _playerWinEffects;
+    [SerializeField] private bool _isEnemy;
     private PlayerMovement _playerMovement;
     private MegaPunchController _megaPunchController;
     private AttackBehaviour _attackBehaviour;
@@ -18,7 +19,7 @@ public class DeathBehaviour : MonoBehaviour
     void Start()
     {
         InitComponents();
-        EnemyDeathEffectStop();
+        //EnemyDeathEffectStop();
         Health.EnemyDeathEvent.AddListener(BehaviourAfterEnemyDeath);
         Health.PlayerDeathEvent.AddListener(BehaviourAfterPlayerDeath);
         EventsController.RestartWinEvent.AddListener(EnemyDeathEffectStop);
@@ -46,6 +47,11 @@ public class DeathBehaviour : MonoBehaviour
     private void StopFight()
     {
         _attackBehaviour.enabled = false;
+        if(!_isEnemy)
+        {
+            _animator.SetLayerWeight(1, 0);
+            _animator.SetLayerWeight(2, 0);
+        }
         _animator.CrossFade("Idle", 0.1f);
         _animator.SetBool("Attack", false);
         _hitBoneRigidbody.velocity = Vector3.zero;
