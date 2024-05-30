@@ -1,5 +1,5 @@
 {
-  "idSave": 153,
+  "idSave": 155,
   "isFirstSession": false,
   "language": "ru",
   "promptDone": false,
@@ -11,7 +11,7 @@
     false
   ],
   "Cups": 5,
-  "Coins": 310,
+  "Coins": 320,
   "PlayerHealth": 100,
   "PlayerForce": 50,
   "PlayerStamina": 6,

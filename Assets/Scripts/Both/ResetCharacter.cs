@@ -1,5 +1,6 @@
-using DG.Tweening;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using YG;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(AttackBehaviour))]
@@ -20,10 +21,6 @@ public class ResetCharacter : MonoBehaviour
     void Start()
     {
         _isStartScreen = true;
-        //foreach (Collider collider in _colliders)
-        //{
-        //    collider.enabled = false;
-        //}
         _characterStartPosition = transform.position;
         _characterStartRotation = transform.localRotation;
         InitComponents();
@@ -64,20 +61,16 @@ public class ResetCharacter : MonoBehaviour
     }
     private void InitEvents()
     {
-        EventsController.StartEvent.AddListener(StartGame);
+        //EventsController.StartEvent.AddListener(StartGame);
         EventsController.RestartWinEvent.AddListener(RestartWinLevel);
         EventsController.RestartLoseEvent.AddListener(RestartLoseLevel);
     }
 
-    private void StartGame()
+    public void StartGame()
     {
-        _isStartScreen = false;
-        //foreach(Collider collider in _colliders)
-        //{
-        //    collider.enabled = true;
-        //} 
-
-        if(_playerMovement != null)
+        transform.position = _characterStartPosition;
+        transform.rotation = _characterStartRotation;
+        if (_playerMovement != null)
         {
             _playerMovement.enabled = true;
             _animator.CrossFade("IdleInFight", 0.1f);
@@ -97,16 +90,14 @@ public class ResetCharacter : MonoBehaviour
         }
         _attackBehaviour.enabled = true;
         _armature.SetActive(false);
+        _isStartScreen = false;
     }
 
     private void ResetCharacters(string NameAnimationAfterReset)
     {
-        //foreach (Collider collider in _colliders)
-        //{
-        //    collider.enabled = false;
-        //}
         _attackBehaviour.Attack(false);
         _armature.SetActive(false);
+        _animator.SetBool("Attack", false);
         if (_playerMovement != null)
         {
             _animator.enabled = true;
@@ -124,11 +115,17 @@ public class ResetCharacter : MonoBehaviour
 
     private void RestartWinLevel()
     {
+        if (YandexGame.EnvironmentData.isMobile)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _animator.SetBool("Attack", false);
         ResetCharacters("WinDance");
 
     }
     private void RestartLoseLevel()
     {
+        if (YandexGame.EnvironmentData.isMobile)
+            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        _animator.SetBool("Attack", false);
         ResetCharacters("Lose");
     }
 

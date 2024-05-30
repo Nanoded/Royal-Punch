@@ -35,7 +35,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Start()
     {
-
         _rigidbody = GetComponent<Rigidbody>();
         _enemy = GameObject.FindGameObjectWithTag("Enemy").transform;
     }
@@ -48,8 +47,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void Move()
     {
-        Vector3 forwardMovement = Vector3.zero;
-        Vector3 rightMovement = Vector3.zero;
+        Vector3 forwardMovement;
+        Vector3 rightMovement;
 
         if (YandexGame.EnvironmentData.isDesktop)
         {

@@ -41,12 +41,18 @@ public class AttackBehaviour : MonoBehaviour
 
     private void Start()
     {
-        if(!_isEnemey)
-            _attackButton.SetActive(false);
         InitData();
-        EventsController.StartEvent.AddListener(() =>
+
+        _animator = GetComponent<Animator>();
+        if(TryGetComponent(out PlayerMovement playerMovement))
         {
-            if(!_isEnemey)
+            _playerMovement = playerMovement;
+            
+        }
+        if (!_isEnemey)
+        {
+            Health.EnemyDeathEvent.AddListener(() => _enemyHealth = null);
+            EventsController.StartEvent.AddListener(() =>
             {
                 if (YandexGame.EnvironmentData.isMobile)
                 {
@@ -54,23 +60,17 @@ public class AttackBehaviour : MonoBehaviour
                 }
                 _staminaText.text = _maxStaminaCount.ToString();
                 _currentStaminaCount = _maxStaminaCount;
-            }
-        });
-        _animator = GetComponent<Animator>();
-        if(TryGetComponent(out PlayerMovement playerMovement))
-        {
-            _playerMovement = playerMovement;
-            
-        }
-        if(_isEnemey)
-        {
-            Health.EnemyDeathEvent.AddListener(UpgradeDamage);
-        }
-        else
-        {
+            });
+            _attackButton.SetActive(false);
             EventsController.RestartLoseEvent.AddListener(() => _staminaText.text = _maxStaminaCount.ToString());
             EventsController.RestartWinEvent.AddListener(() => _staminaText.text = _maxStaminaCount.ToString());
         }
+        else
+        {
+            Health.PlayerDeathEvent.AddListener(() => _enemyHealth = null);
+            Health.EnemyDeathEvent.AddListener(UpgradeDamage);
+        }
+          
     }
 
     private void InitData()
